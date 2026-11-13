@@ -2,7 +2,7 @@
 
 <template>
   <div>
-    <h1>Rick and Morty</h1>
+    <h1 class="bg-accent">Rick and Morty</h1>
   </div>
 </template>
 
