@@ -9,6 +9,13 @@ export default defineNuxtConfig({
       stylistic: false,
     },
   },
+
+  runtimeConfig: {
+    public: {
+      apiBase: '',
+    },
+  },
+
   css: ['~/assets/css/main.css'],
   vite: {
     plugins: [tailwindcss()],
