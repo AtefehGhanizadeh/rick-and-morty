@@ -26,7 +26,7 @@ const handleSearch = () => {
         type="submit"
         class="rounded-sm bg-accent text-accent-foreground h-12 px-4 flex items-center justify-center"
       >
-        <IconsSearchIcon />
+        <SearchIcon/>
         <span class="hidden md:inline text-accent-foreground text-14-medium ml-2">Search</span>
       </button>
     </form>

@@ -1,12 +1,18 @@
+<script setup lang="ts">
+import Logo from './Logo.vue';
+import Container from '../layout/Container.vue';
+
+</script>
+
 <template>
   <header class="bg-header w-full">
-    <LayoutContainer class="pt-3 pb-6">
+    <Container class="pt-3 pb-6">
       <div class="flex flex-col">
-        <HeaderLogo />
+        <Logo/>
         <slot name="search" />
         <slot />
         <slot name="shadow" />
       </div>
-    </LayoutContainer>
+    </Container>
   </header>
 </template>
