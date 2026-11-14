@@ -7,6 +7,7 @@ import ErrorState from '~/components/ui/ErrorState.vue'
 import SearchInput from '~/components/header/SearchInput.vue'
 
 const route = useRoute()
+const config = useRuntimeConfig()
 
 const name = computed(() => {
   const value = route.query.name
@@ -16,6 +17,24 @@ const name = computed(() => {
 const page = computed(() => Number(route.query.page) || 1)
 
 const { data, status, error, refresh } = useGetCharacterList({ name, page })
+
+
+useHead({
+  link: [
+    {
+      rel: 'canonical',
+      href: config.public.siteUrl,
+    },
+  ],
+})
+
+useSeoMeta({
+  title: () => (name.value ? `Search: ${name.value}` : 'All characters'),
+  description: 'Browse and search every character from Rick and Morty.',
+  ogTitle: 'Rick and Morty Explorer',
+  ogType: 'website',
+  robots: () => (name.value ? 'noindex, follow' : 'index, follow'),
+})
 </script>
 <template>
   <div>

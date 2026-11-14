@@ -15,6 +15,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       apiBase: '',
+      siteUrl: '',
     },
   },
 

@@ -12,6 +12,7 @@ definePageMeta({
 })
 
 const route = useRoute()
+const config = useRuntimeConfig()
 
 const id = computed(() => String(route.params.id ?? ''))
 const {
@@ -19,6 +20,27 @@ const {
   status: detailStatus,
   error: characterError,
 } = useGetCharacterDetail({ id })
+
+useHead({
+  link: [
+    {
+      rel: 'canonical',
+      href: `${config.public.siteUrl}${route.path}`,
+    },
+  ],
+})
+
+useSeoMeta({
+  title: () => character.value?.name,
+  description: () =>
+    character.value
+      ? `${character.value.name}: ${character.value.status} ${character.value.species} from ${character.value.origin.name}.`
+      : undefined,
+  ogTitle: () => character.value?.name,
+  ogImage: () => character.value?.image,
+  ogType: 'profile',
+  twitterCard: 'summary_large_image',
+})
 
 if (characterError.value) {
   const status = characterError.value?.status ?? 404
