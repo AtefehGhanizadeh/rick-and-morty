@@ -21,13 +21,13 @@ withDefaults(defineProps<Props>(), {
     <ul
       class="grid grid-cols-[repeat(auto-fill,minmax(min(100%,384px),1fr))] justify-center gap-4 md:gap-6"
     >
-      <template v-if="status === 'idle' || status === 'pending'">
+    <template v-if="status === 'success'">
+      <slot />
+    </template>
+      <template v-else>
         <CharacterInfoSkeleton v-for="item in skeletonCount" :key="item" />
       </template>
 
-      <template v-else-if="status === 'success'">
-        <slot />
-      </template>
     </ul>
   </div>
 </template>
