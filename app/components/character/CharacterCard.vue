@@ -15,7 +15,8 @@ defineProps<Props>()
         :src="character.image"
         :alt="character.name"
         :size="296"
-        class="size-[296px]"
+        class="size-full"
+        
       />
       <div class="flex flex-col items-start gap-3 w-full">
         <p

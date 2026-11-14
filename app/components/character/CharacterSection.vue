@@ -19,7 +19,7 @@ withDefaults(defineProps<Props>(), {
       </h2>
     </div>
     <ul
-      class="grid grid-cols-[repeat(auto-fill,minmax(min(100%,328px),384px))] auto-rows-fr justify-center gap-4 md:gap-6"
+      class="grid grid-cols-[repeat(auto-fill,minmax(min(100%,384px),1fr))] justify-center gap-4 md:gap-6"
     >
       <template v-if="status === 'idle' || status === 'pending'">
         <CharacterInfoSkeleton v-for="item in skeletonCount" :key="item" />

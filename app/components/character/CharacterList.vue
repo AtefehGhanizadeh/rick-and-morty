@@ -8,7 +8,7 @@ defineProps<Props>()
 </script>
 
 <template>
-  <ul class="grid grid-cols-[repeat(auto-fill,minmax(328px,1fr))] justify-center gap-4">
+  <ul class="grid grid-cols-[repeat(auto-fill,minmax(328px,1fr))] justify-center gap-6">
     <template v-if="status === 'pending' || status === 'idle'">
       <CharacterCardSkeleton v-for="index in 20" :key="index" />
     </template>

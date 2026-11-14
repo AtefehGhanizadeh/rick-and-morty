@@ -39,7 +39,7 @@ function handleError() {
 </script>
 
 <template>
-  <div class="relative overflow-hidden rounded-md">
+  <div class="relative  overflow-hidden rounded-md">
     <div
       v-if="!isLoaded"
       class="bg-input absolute inset-0 animate-pulse"
