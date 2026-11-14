@@ -4,9 +4,13 @@ interface Props {
   icon: Component
   status: Status
   skeletonCount?: number
+  isEmpty?: boolean
+  emptyMessage?: string
 }
 withDefaults(defineProps<Props>(), {
   skeletonCount: 4,
+  isEmpty: false,
+  emptyMessage: 'Nothing to show.',
 })
 </script>
 
@@ -18,16 +22,22 @@ withDefaults(defineProps<Props>(), {
         {{ title }}
       </h2>
     </div>
+    <p
+      v-if="status === 'success' && isEmpty"
+      class="text-16-regular text-text w-full text-center bg-blue-background rounded-2xl p-4"
+    >
+      {{ emptyMessage }}
+    </p>
+
     <ul
       class="grid grid-cols-[repeat(auto-fill,minmax(min(100%,384px),1fr))] justify-center gap-4 md:gap-6"
     >
-    <template v-if="status === 'success'">
-      <slot />
-    </template>
+      <template v-if="status === 'success'">
+        <slot />
+      </template>
       <template v-else>
         <CharacterInfoSkeleton v-for="item in skeletonCount" :key="item" />
       </template>
-
     </ul>
   </div>
 </template>

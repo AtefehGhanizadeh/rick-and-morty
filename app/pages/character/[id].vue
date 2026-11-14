@@ -43,7 +43,6 @@ useSeoMeta({
   twitterCard: 'summary_large_image',
 })
 
-
 const episodeIds = computed(() =>
   (character.value?.episode ?? [])
     .map((url) => getIdFromUrl(url))
@@ -53,8 +52,17 @@ const locationId = computed(() => {
   const url = character.value?.location.url
   return url ? getIdFromUrl(url) : null
 })
-const { data: episodes, status: episodeStatus } = useGetEpisodes({ ids: episodeIds })
-const { data: location, status: locationStatus } = useGetLocations({ id: locationId })
+
+const characterLoaded = () => !!character.value
+
+const { data: episodes, status: episodeStatus } = useGetEpisodes({
+  ids: episodeIds,
+  enabled: characterLoaded,
+})
+const { data: location, status: locationStatus } = useGetLocations({
+  id: locationId,
+  enabled: characterLoaded,
+})
 </script>
 
 <template>
@@ -74,7 +82,13 @@ const { data: location, status: locationStatus } = useGetLocations({ id: locatio
     <ErrorState v-if="characterError" @retry="refresh" />
     <Container v-else class="py-8">
       <div class="flex flex-col gap-8 md:gap-16">
-        <CharacterSection :status="episodeStatus" title="Episodes" :icon="EpisodeIcon">
+        <CharacterSection
+          :status="episodeStatus"
+          :is-empty="!episodes"
+          empty-message="No episodes found for this character."
+          title="Episodes"
+          :icon="EpisodeIcon"
+        >
           <CharacterInfo
             v-for="episode in episodes"
             :key="episode.id"
@@ -83,7 +97,13 @@ const { data: location, status: locationStatus } = useGetLocations({ id: locatio
             :card-description="episode.air_date"
           />
         </CharacterSection>
-        <CharacterSection :status="locationStatus" title="Locations" :icon="LocationIcon">
+        <CharacterSection
+          :status="locationStatus"
+          :is-empty="!location"
+          empty-message="No location information available for this character."
+          title="Locations"
+          :icon="LocationIcon"
+        >
           <CharacterInfo
             v-if="location"
             :card-title="location.name"
