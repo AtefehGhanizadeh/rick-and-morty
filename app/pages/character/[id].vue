@@ -19,6 +19,7 @@ const {
   data: character,
   status: detailStatus,
   error: characterError,
+  refresh,
 } = useGetCharacterDetail({ id })
 
 useHead({
@@ -42,14 +43,6 @@ useSeoMeta({
   twitterCard: 'summary_large_image',
 })
 
-if (characterError.value) {
-  const status = characterError.value?.status ?? 404
-  throw createError({
-    status,
-    statusText: status === 404 ? 'Character not found' : 'Could not load character',
-    fatal: true,
-  })
-}
 
 const episodeIds = computed(() =>
   (character.value?.episode ?? [])
@@ -66,11 +59,10 @@ const { data: location, status: locationStatus } = useGetLocations({ id: locatio
 
 <template>
   <main>
-    <Header class="h-[387px] md:h-[432px]">
+    <Header :class="characterError ? 'h-[192px]' : 'h-[387px] md:h-[432px]'">
       <CharacterHeroSkeleton v-if="detailStatus === 'pending'" />
-
       <CharacterHero v-if="character" :character="character" />
-      <template #shadow>
+      <template v-if="!characterError" #shadow>
         <div class="absolute z-0 left-0 top-5.25 md:hidden">
           <img src="/images/shadow-character-1.svg" />
         </div>
@@ -79,7 +71,8 @@ const { data: location, status: locationStatus } = useGetLocations({ id: locatio
         </div>
       </template>
     </Header>
-    <Container class="py-8">
+    <ErrorState v-if="characterError" @retry="refresh" />
+    <Container v-else class="py-8">
       <div class="flex flex-col gap-8 md:gap-16">
         <CharacterSection :status="episodeStatus" title="Episodes" :icon="EpisodeIcon">
           <CharacterInfo
